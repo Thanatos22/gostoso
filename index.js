@@ -571,7 +571,7 @@ async function starts() {
 					} else if (Number(args[0]) === 0) {
 						welkom.splice(from, 1)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('Recurso de boas vindas desativado️'️')
+						reply('Recurso de boas vindas desativado️'️)
 					} else {
 						reply('.welcome 1 para ativar e .welcome 0 para desativar')
 					}
