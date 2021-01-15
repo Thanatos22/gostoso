@@ -348,28 +348,7 @@ async function starts() {
 					var gbl2 = gh.split("|")[1];
 					if (args.length < 1) return reply('Cadê o texto macaco')
 					reply(mess.wait)
-					anu = await fetchJson(`https://docs-jojo.herokuapp.com/api/phblogo?text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
-					buffer = await getBuffer(anu.result)
-					client.sendMessage(from, buffer, image, {quoted: mek})
-					break
-                case 'retrologo':
-					var gh = body.slice(9)
-					var gbl1 = gh.split("|")[0];
-					var gbl2 = gh.split("|")[1];
-					var gbl3 = gh.split("|")[1];
-					if (args.length < 1) return reply('Cadê o texto macaco')
-					reply(mess.wait)
-					anu = await fetchJson(`https://docs-jojo.herokuapp.com/api/neon?text1=${gbl1}&text2=${gbl2}&text3=${gbl3}`, {method: 'get'})
-					buffer = await getBuffer(anu.result)
-					client.sendMessage(from, buffer, image, {quoted: mek})
-					break
-                case 'glitch':
-					var gh = body.slice(9)
-					var gbl1 = gh.split("|")[0];
-					var gbl2 = gh.split("|")[1];
-					if (args.length < 1) return reply('Cadê o texto macaco')
-					reply(mess.wait)
-					anu = await fetchJson(`https://docs-jojo.herokuapp.com/api/ttlogo?text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
+					anu = await fetchJson(`https://mhankbarbar.tech/api/textpro?theme=pornhub&text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, image, {quoted: mek})
 					break
@@ -381,24 +360,19 @@ async function starts() {
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break
                 case 'thunder':
-					if (args.length < 1) return reply('Cadê o texto macaco')
-					teks = body.slice(7)
-					if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
-					reply(mess.wait)
-					anu = await fetchJson(`https://docs-jojo.herokuapp.com/api/thunder?text=${teks}`, {method: 'get'})
-					if (anu.error) return reply(anu.error)
-					buff = await getBuffer(anu.result)
-					client.sendMessage(from, buff, image, {quoted: mek,})
-					break
-				case 'nulis':
-					if (args.length < 1) return reply('Cadê o texto macaco')
-					teks = body.slice(7)
-					reply(mess.wait)
-					anu = await fetchJson(`https://st4rz.herokuapp.com/api/nulis?text=${teks}`, {method: 'get'})
-					if (anu.error) return reply(anu.error)
-					buff = await getBuffer(anu.result)
-					client.sendMessage(from, buff, image, {quoted: mek, caption: mess.success})
-					break
+              	    if (args.length < 1) return reply('Cadê o texto macaco')
+                    teks = `${body.slice(8)}`
+                    if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
+                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/thunder?text=${teks}`, {method: 'get'})
+                    client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
+			     	break
+                case 'neon':
+              	    if (args.length < 1) return reply('Cadê o texto macaco')
+                    teks = `${body.slice(8)}`
+                    if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
+                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
+                    client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
+			     	break
 				case 'tagall':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
