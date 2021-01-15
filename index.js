@@ -562,7 +562,7 @@ async function starts() {
 				case 'welcome':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
-					if (args.length < 1) return reply('Faz essa porra direito macaco')
+					if (args.length < 1) return reply('Hmm')
 					if (Number(args[0]) === 1) {
 						if (isWelkom) return reply('Já ta ativado macaco')
 						welkom.push(from)
@@ -571,7 +571,7 @@ async function starts() {
 					} else if (Number(args[0]) === 0) {
 						welkom.splice(from, 1)
 						fs.writeFileSync('./src/welkom.json', JSON.stringify(welkom))
-						reply('Recurso de boas vindas desativado️'️)
+						reply('Recurso de boas vindas desativado️')
 					} else {
 						reply('.welcome 1 para ativar e .welcome 0 para desativar')
 					}
