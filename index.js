@@ -494,6 +494,20 @@ async function starts() {
 						client.groupRemove(from, mentioned)
 					}
 					break
+                case 'block':
+				 client.updatePresence(from, Presence.composing) 
+				 client.chatRead (from)
+					if (!isGroup) return reply(mess.only.group)
+					if (!isOwner) return reply(mess.only.ownerB)
+					client.blockUser (`${body.slice(7)}@c.us`, "add")
+					client.sendMessage(from, `Pronto papai, bloquiei esse desgraçado ${body.slice(7)}@c.us`, text)
+					break
+                    case 'unblock':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isOwner) return reply(mess.only.ownerB)
+				    client.blockUser (`${body.slice(9)}@c.us`, "remove")
+					client.sendMessage(from, `Pronto papai, desbloqueie esse viado ${body.slice(9)}@c.us`, text)
+				break
 				case 'listadmins':
 					if (!isGroup) return reply(mess.only.group)
 					teks = `Lista dos adms *${groupMetadata.subject}*\nTotal : ${groupAdmins.length}\n\n`
@@ -519,6 +533,27 @@ async function starts() {
                                             reply(mess.only.admin)
                                         }
                                         break
+                case 'setig': 
+                        if (!isGroup) return reply(mess.only.group)
+                       if (!isGroupAdmins) return reply(mess.only.admin)
+                        if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                       media = await client.downloadAndSaveMediaMessage(mek)
+                         await client.updateProfilePicture (from, media)
+                        reply('Pronto, alterei a foto do grupo')
+                case 'setname':
+                if (!isGroup) return reply(mess.only.group)
+			    if (!isGroupAdmins) return reply(mess.only.admin)
+				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                client.groupUpdateSubject(from, `${body.slice(9)}`)
+                client.sendMessage(from, 'Pronto, alterei o nome do grupo', text, {quoted: mek})
+                break
+                case 'setdesc':
+                if (!isGroup) return reply(mess.only.group)
+			    if (!isGroupAdmins) return reply(mess.only.admin)
+				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                client.groupUpdateDescription(from, `${body.slice(9)}`)
+                client.sendMessage(from, 'Pronto, alterei a descrição do grupo', text, {quoted: mek})
+                break        
 				case 'toimg':
 					if (!isQuotedSticker) return reply('So funciona com figurinhas macaco')
 					reply(mess.wait)
