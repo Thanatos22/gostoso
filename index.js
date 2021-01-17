@@ -342,7 +342,7 @@ async function starts() {
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, video, {mimetype: 'video/mp4', filename: `${anu.title}.mp4`, quoted: mek})
 					break
-                case 'phlogo':
+              /*  case 'phlogo':
 					var gh = body.slice(9)
 					var gbl1 = gh.split("|")[0];
 					var gbl2 = gh.split("|")[1];
@@ -351,7 +351,7 @@ async function starts() {
 					anu = await fetchJson(`https://mhankbarbar.tech/api/textpro?theme=pornhub&text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, image, {quoted: mek})
-					break
+					break 
                 case 'text3d':
               	    if (args.length < 1) return reply('Cadê o texto macaco')
                     teks = `${body.slice(8)}`
@@ -372,8 +372,25 @@ async function starts() {
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
                     buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
-			     	break
-				case 'tagall':
+			     	break */
+                case 'tagall':
+                    if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					var value = body.slice(9)
+					var group = await client.groupMetadata(from)
+					var member = group['participants']
+					var mem = []
+					member.map( async adm => {
+					mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
+					})
+					var options = {
+					text: value,
+					contextInfo: { mentionedJid: mem },
+					quoted: mek
+					}
+					client.sendMessage(from, options, text)
+					break			     	
+				case 'tagall2':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					members_id = []
@@ -385,7 +402,7 @@ async function starts() {
 					}
 					mentions(teks, members_id, true)
 					break
-                                case 'tagall2':
+                                case 'tagall3':
 					members_id = []
 					teks = (args.length > 1) ? body.slice(8).trim() : ''
 					teks += '\n\n'
@@ -395,7 +412,7 @@ async function starts() {
 					}
 					reply(teks)
 					break
-                                case 'tagall3':
+                                case 'tagall4':
 					members_id = []
 					teks = (args.length > 1) ? body.slice(8).trim() : ''
 					teks += '\n\n'
@@ -494,21 +511,7 @@ async function starts() {
 						client.groupRemove(from, mentioned)
 					}
 					break
-                case 'block':
-				 client.updatePresence(from, Presence.composing) 
-				 client.chatRead (from)
-					if (!isGroup) return reply(mess.only.group)
-					if (!isOwner) return reply(mess.only.ownerB)
-					client.blockUser (`${body.slice(7)}@c.us`, "add")
-					client.sendMessage(from, `Pronto papai, bloquiei esse desgraçado ${body.slice(7)}@c.us`, text)
-					break
-                    case 'unblock':
-					if (!isGroup) return reply(mess.only.group)
-					if (!isOwner) return reply(mess.only.ownerB)
-				    client.blockUser (`${body.slice(9)}@c.us`, "remove")
-					client.sendMessage(from, `Pronto papai, desbloqueie esse viado ${body.slice(9)}@c.us`, text)
-				break
-				case 'listadmins':
+				case 'listadm':
 					if (!isGroup) return reply(mess.only.group)
 					teks = `Lista dos adms *${groupMetadata.subject}*\nTotal : ${groupAdmins.length}\n\n`
 					no = 0
