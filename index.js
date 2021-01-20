@@ -558,7 +558,7 @@ async function starts() {
                                         break
                                 case 'leave':
                                         if (!isGroup) return reply(mess.only.group)
-                                        if (!isOwner) return reply(mess.only.ownerB) {
+                                        if (isGroupAdmins || isOwner) {
                                             client.groupLeave(from)
                                         } else {
                                             reply(mess.only.admin)
