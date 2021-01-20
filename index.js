@@ -117,9 +117,9 @@ async function starts() {
 
 			mess = {
 				wait: 'Calmai macaco 🦧',
-				waitmk: 'Se acalme macaco, vou tentar fazer, caso não dê certo tente novamente 🐒'
-                waitstk: 'Calmai macaco, vou tentar fazer, caso não dê certo tente mudar o formato do vídeo ou reduzir seu tamanho 🐒'
-                waitdw: : 'Vou tentar baixar macaco, apenas aguarde ate que o download seja concluído 🐒'
+				waitmk: 'Se acalme macaco vou tentar fazer caso não dê certo tente novamente 🐒',
+                waitstk: 'Calmai macaco vou tentar fazer caso não dê certo tente mudar o formato do vídeo ou reduzir seu tamanho 🐒',
+                waitdw: 'Vou tentar baixar macaco, apenas aguarde ate que o download seja concluído 🐒',
 				success: 'Deu certo carai️',
 				error: {
 					stick: 'Falha, ocorreu um erro ao converter a imagem em figurinha',
