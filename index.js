@@ -117,6 +117,9 @@ async function starts() {
 
 			mess = {
 				wait: 'Calmai macaco 🦧',
+				waitmk: 'Se acalme macaco, vou tentar fazer, caso não dê certo tente novamente 🐒'
+                waitstk: 'Calmai macaco, vou tentar fazer, caso não dê certo tente mudar o formato do vídeo ou reduzir seu tamanho 🐒'
+                waitdw: : 'Vou tentar baixar macaco, apenas aguarde ate que o download seja concluído 🐒'
 				success: 'Deu certo carai️',
 				error: {
 					stick: 'Falha, ocorreu um erro ao converter a imagem em figurinha',
@@ -184,7 +187,7 @@ async function starts() {
 					teks += `Total : ${blocked.length}`
 					client.sendMessage(from, teks.trim(), extendedText, {quoted: mek, contextInfo: {"mentionedJid": blocked}})
 					break
-				case 'ocr':
+				case 'totxt':
 					if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
 						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
 						const media = await client.downloadAndSaveMediaMessage(encmedia)
@@ -231,7 +234,7 @@ async function starts() {
 						const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
 						const media = await client.downloadAndSaveMediaMessage(encmedia)
 						ran = getRandom('.webp')
-						reply(mess.wait)
+						reply(mess.waitstk)
 						await ffmpeg(`./${media}`)
 							.inputFormat(media.split('.')[1])
 							.on('start', function (cmd) {
@@ -257,7 +260,7 @@ async function starts() {
 						const media = await client.downloadAndSaveMediaMessage(encmedia)
 						ranw = getRandom('.webp')
 						ranp = getRandom('.png')
-						reply(mess.wait)
+						reply(mess.waitstk)
 						keyrmbg = 'Your-ApiKey'
 						await removeBackgroundFromImageFile({path: media, apiKey: keyrmbg.result, size: 'auto', type: 'auto', ranp}).then(res => {
 							fs.unlinkSync(media)
@@ -325,6 +328,7 @@ async function starts() {
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
 					anu = await fetchJson(`https://st4rz.herokuapp.com/api/ytv2?url=${args[0]}`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
+					reply(mess.waitdw)
 					teks = `*título* : ${anu.title}\n*tamanho* : ${anu.filesize}`
 					thumb = await getBuffer(anu.thumb)
 					client.sendMessage(from, thumb, image, {quoted: mek, caption: teks})
@@ -336,46 +340,70 @@ async function starts() {
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
 					anu = await fetchJson(`https://st4rz.herokuapp.com/api/ytv2?url=${args[0]}`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
+					reply(mess.waitdw)
 					teks = `*Titulo 🐒* : ${anu.title}`
 					thumb = await getBuffer(anu.thumb)
 					client.sendMessage(from, thumb, image, {quoted: mek, caption: teks})
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, video, {mimetype: 'video/mp4', filename: `${anu.title}.mp4`, quoted: mek})
 					break
-              /*  case 'phlogo':
+                case 'phlogo':
 					var gh = body.slice(9)
 					var gbl1 = gh.split("|")[0];
 					var gbl2 = gh.split("|")[1];
 					if (args.length < 1) return reply('Cadê o texto macaco')
-					reply(mess.wait)
-					anu = await fetchJson(`https://mhankbarbar.tech/api/textpro?theme=pornhub&text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
+					reply(mess.waitmk)
+					anu = await fetchJson(`https://arugaz.my.id/api/textpro/pornhub?text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
 					buffer = await getBuffer(anu.result)
 					client.sendMessage(from, buffer, image, {quoted: mek})
 					break 
+				 case 'marvel':
+					var gh = body.slice(9)
+					var gbl1 = gh.split("|")[0];
+					var gbl2 = gh.split("|")[1];
+					if (args.length < 1) return reply('Cadê o texto macaco')
+					reply(mess.waitmk)
+					anu = await fetchJson(`https://arugaz.my.id/api/textpro/marvelstudio?text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
+					buffer = await getBuffer(anu.result)
+					client.sendMessage(from, buffer, image, {quoted: mek})
+					break
+                case 'glitch':
+					var gh = body.slice(9)
+					var gbl1 = gh.split("|")[0];
+					var gbl2 = gh.split("|")[1];
+					if (args.length < 1) return reply('Cadê o texto macaco')
+					reply(mess.waitmk)
+					anu = await fetchJson(`https://arugaz.my.id/api/textpro/glitchtext?text1=${gbl1}&text2=${gbl2}`, {method: 'get'})
+					buffer = await getBuffer(anu.result)
+					client.sendMessage(from, buffer, image, {quoted: mek})
+					break 	
                 case 'text3d':
               	    if (args.length < 1) return reply('Cadê o texto macaco')
                     teks = `${body.slice(8)}`
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
-                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/text3d?text=${teks}`, {method: 'get'})
+                    reply(mess.waitmk)
+                    buff = await getBuffer(`https://arugaz.my.id/api/textpro/text3d?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break
                 case 'thunder':
               	    if (args.length < 1) return reply('Cadê o texto macaco')
                     teks = `${body.slice(8)}`
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
-                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/thunder?text=${teks}`, {method: 'get'})
+                    reply(mess.waitmk)
+                    buff = await getBuffer(`https://arugaz.my.id/api/textpro/thundertext?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break
-                case 'neon':
+                case '0101':
               	    if (args.length < 1) return reply('Cadê o texto macaco')
                     teks = `${body.slice(8)}`
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
-                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
+                    reply(mess.waitmk)
+                    buff = await getBuffer(`https://arugaz.my.id/api/textpro/matrixtext?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
-			     	break */
+			     	break 
                 case 'tagall':
                     if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					var value = body.slice(9)
 					var group = await client.groupMetadata(from)
 					var member = group['participants']
@@ -392,7 +420,7 @@ async function starts() {
 					break			     	
 				case 'tagall2':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					members_id = []
 					teks = (args.length > 1) ? body.slice(8).trim() : ''
 					teks += '\n\n'
@@ -433,7 +461,7 @@ async function starts() {
 					break
                                 case 'promote':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -451,7 +479,7 @@ async function starts() {
 					break
 				case 'demote':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -469,7 +497,7 @@ async function starts() {
 					break
                 case 'grp':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (args[0] === 'open') {
 					    reply(`Grupo aberto com sucesso`)
@@ -481,7 +509,7 @@ async function starts() {
 					break
 				case 'add':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (args.length < 1) return reply('Quem vc quer que eu adicione?')
 					if (args[0].startsWith('08')) return reply('Não esquece do codigo de pais macaco')
@@ -495,7 +523,7 @@ async function starts() {
 					break
 				case 'kick':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Ta de adm mas é burro pa caralho, c tem que marcar alguem pra eu remover')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -523,14 +551,14 @@ async function starts() {
 					break
                                 case 'linkgroup':
                                         if (!isGroup) return reply(mess.only.group)
-                                        if (!isGroupAdmins) return reply(mess.only.admin)
+                                        if (isGroupAdmins || isOwner) return reply(mess.only.admin)
                                         if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                                         linkgc = await client.groupInviteCode(from)
                                         reply('https://chat.whatsapp.com/'+linkgc)
                                         break
                                 case 'leave':
                                         if (!isGroup) return reply(mess.only.group)
-                                        if (isGroupAdmins || isOwner) {
+                                        if (!isOwner) return reply(mess.only.ownerB) {
                                             client.groupLeave(from)
                                         } else {
                                             reply(mess.only.admin)
@@ -538,21 +566,21 @@ async function starts() {
                                         break
                 case 'setig': 
                         if (!isGroup) return reply(mess.only.group)
-                       if (!isGroupAdmins) return reply(mess.only.admin)
+                       if (isGroupAdmins || isOwner) return reply(mess.only.admin)
                         if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                        media = await client.downloadAndSaveMediaMessage(mek)
                          await client.updateProfilePicture (from, media)
                         reply('Pronto, alterei a foto do grupo')
                 case 'setname':
                 if (!isGroup) return reply(mess.only.group)
-			    if (!isGroupAdmins) return reply(mess.only.admin)
+			    if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                 client.groupUpdateSubject(from, `${body.slice(9)}`)
                 client.sendMessage(from, 'Pronto, alterei o nome do grupo', text, {quoted: mek})
                 break
                 case 'setdesc':
                 if (!isGroup) return reply(mess.only.group)
-			    if (!isGroupAdmins) return reply(mess.only.admin)
+			    if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 				if (!isBotGroupAdmins) return reply(mess.only.Badmin)
                 client.groupUpdateDescription(from, `${body.slice(9)}`)
                 client.sendMessage(from, 'Pronto, alterei a descrição do grupo', text, {quoted: mek})
@@ -573,7 +601,7 @@ async function starts() {
 					break
 				case 'welcome':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (isGroupAdmins || isOwner) return reply(mess.only.admin)
 					if (args.length < 1) return reply('Hmm')
 					if (Number(args[0]) === 1) {
 						if (isWelkom) return reply('Já ta ativado macaco')
