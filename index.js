@@ -262,7 +262,7 @@ async function starts() {
 						ranp = getRandom('.png')
 						reply(mess.wait)
 						keyrmbg = 'Your-ApiKey'
-						await removeBackgroundFromImageFile({path: media, apiKey: keyrmbg.result, size: 'auto', type: 'auto', ranp}).then(res => {
+						await removeBackgroundFromImageFile({path: media, apiKey: keyrmbg, size: 'auto', type: 'auto', ranp}).then(res => {
 							fs.unlinkSync(media)
 							let buffer = Buffer.from(res.base64img, 'base64')
 							fs.writeFileSync(ranp, buffer, (err) => {
@@ -296,10 +296,9 @@ async function starts() {
 							.toFormat('webp')
 							.save(ran)*/
 					} else {
-						reply(`Ta achando que eu sou deus carai, faz essa porra direito`)
+						reply(`Ta achando que eu sou deus carai? faz essa porra direito )
 					}
 					break
-				case 'gtts':
 					if (args.length < 1) return client.sendMessage(from, 'Cade a porra do código de idioma macaco', text, {quoted: mek})
 					const gtts = require('./lib/gtts')(args[0])
 					if (args.length < 2) return client.sendMessage(from, 'Cade a porra do texto macaco', text, {quoted: mek})
@@ -518,6 +517,12 @@ async function starts() {
 						client.groupRemove(from, mentioned)
 					}
 					break
+                case 'delete':
+				case 'del':
+						if (!isGroup) return reply(mess.only.group)
+						if (!isGroupAdmins) return reply(mess.only.admin)
+						client.deleteMessage(from, { id: mek.message.extendedTextMessage.contextInfo.stanzaId, remoteJid: from, fromMe: true })
+						break
 				case 'listadm':
 					if (!isGroup) return reply(mess.only.group)
 					teks = `Lista dos adms *${groupMetadata.subject}*\nTotal : ${groupAdmins.length}\n\n`
@@ -578,6 +583,21 @@ async function starts() {
 						fs.unlinkSync(ran)
 					})
 					break
+                case 'tomp3':
+                	client.updatePresence(from, Presence.composing) 
+					if (!isQuotedVideo) return reply('Para usar esse comando é nescessário que você marque um vídeo')
+					reply(mess.wait)
+					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+					media = await client.downloadAndSaveMediaMessage(encmedia)
+					ran = getRandom('.mp4')
+					exec(`ffmpeg -i ${media} ${ran}`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('Falha ao converter video em audio')
+						buffer = fs.readFileSync(ran)
+						client.sendMessage(from, buffer, audio, {mimetype: 'audio/mp4', quoted: mek})
+						fs.unlinkSync(ran)
+					})
+					break
 				case 'welcome':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
@@ -618,7 +638,7 @@ async function starts() {
 						console.log(muehe)
 						reply(muehe)
 					} else {
-						console.log(color('[WARN]','red'), 'Unregistered Command from', color(sender.split('@')[0]))
+						return //console.log(color('[WARN]','red'), 'Unregistered Command from', color(sender.split('@')[0]))
 					}
                            }
 		} catch (e) {
@@ -626,4 +646,3 @@ async function starts() {
 		}
 	})
 }
-starts()
