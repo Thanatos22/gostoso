@@ -299,6 +299,7 @@ async function starts() {
 						reply(`Ta achando que eu sou deus carai? faz essa porra direito`)
 					}
 					break
+					case 'gtts':
 					if (args.length < 1) return client.sendMessage(from, 'Cade a porra do código de idioma macaco', text, {quoted: mek})
 					const gtts = require('./lib/gtts')(args[0])
 					if (args.length < 2) return client.sendMessage(from, 'Cade a porra do texto macaco', text, {quoted: mek})
