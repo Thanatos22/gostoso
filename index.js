@@ -296,7 +296,7 @@ async function starts() {
 							.toFormat('webp')
 							.save(ran)*/
 					} else {
-						reply(`Ta achando que eu sou deus carai? faz essa porra direito )
+						reply(`Ta achando que eu sou deus carai? faz essa porra direito`)
 					}
 					break
 					if (args.length < 1) return client.sendMessage(from, 'Cade a porra do código de idioma macaco', text, {quoted: mek})
