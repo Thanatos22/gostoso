@@ -379,6 +379,9 @@ async function starts() {
                     buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break */
+			   case 'yamete':
+                client.sendMessage(from, './sound'+'/yamete.mp3', {quoted: mek, ptt:true})
+                break  	
                 case 'tagall':
                     if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
