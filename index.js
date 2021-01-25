@@ -380,9 +380,6 @@ async function starts() {
                     buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break */
-			   case 'yamete':
-                client.sendMessage(from, './sound'+'/yamete.mp3', {quoted: mek, ptt:true})
-                break  	
                 case 'tagall':
                     if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
@@ -441,6 +438,32 @@ async function starts() {
 					}
 					reply('Pronto papai 🥰, deletei todos os meus chats')
 					break
+        case 'block':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isOwner) return reply(mess.only.ownerB)
+					client.blockUser (`${body.slice(7)}@c.us`, "add")
+					client.sendMessage(from, `Pronto papai bloquiei esse desgraçado ${body.slice(7)}@c.us`, text)
+					break
+                    case 'unblock':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isOwner) return reply(mess.only.ownerB)
+				    client.blockUser (`${body.slice(9)}@c.us`, "remove")
+					client.sendMessage(from, `Pronto papai desbloquiei esse viado ${body.slice(9)}@c.us`, text)
+				break
+        case 'bug':
+                case 'reportar':
+                case 'reportarbug':
+                     const pesan = body.slice(5)
+                      if (pesan.length > 300) return client.sendMessage(from, 'Grande pa carai essa porra, meu dono não vai nem querer ler', msgType.text, {quoted: mek})
+                        var nomor = mek.participant
+                       const teks1 = `*[BUG REPORTADO]*\nNumero : @${nomor.split("@s.whatsapp.net")[0]}\nMOTIVO : ${pesan}`
+                      var options = {
+                         text: teks1,
+                         contextInfo: {mentionedJid: [nomor]},
+                     }
+                    client.sendMessage('553192271279@s.whatsapp.net', options, text, {quoted: mek})
+                    reply('Reportei o bug para o meu dono')
+                    break
                                 case 'promote':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
