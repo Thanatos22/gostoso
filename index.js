@@ -326,7 +326,7 @@ async function starts() {
 				case 'play':
 					if (args.length < 1) return reply('Cade o link macaco')
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
-					anu = await fetchJson(`https://st4rz.herokuapp.com/api/ytv2?url=${args[0]}`, {method: 'get'})
+					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${tels}&apikey=BotWeA`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
 					reply(mess.waitdw)
 					teks = `*título* : ${anu.title}\n*tamanho* : ${anu.filesize}`
@@ -338,7 +338,7 @@ async function starts() {
                 case 'ytmp4':
 					if (args.length < 1) return reply('Cade o link macaco')
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
-					anu = await fetchJson(`https://st4rz.herokuapp.com/api/ytv2?url=${args[0]}`, {method: 'get'})
+					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${tels}&apikey=BotWeA`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
 					reply(mess.waitdw)
 					teks = `*Titulo 🐒* : ${anu.title}`
@@ -362,7 +362,7 @@ async function starts() {
                     teks = `${body.slice(8)}`
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
                     reply(mess.waitmk)
-                    buff = await getBuffer(`https://arugaz.my.id/api/textpro/text3d?text=${teks}`, {method: 'get'})
+                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/text3d?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break
                 case 'thunder':
@@ -370,7 +370,7 @@ async function starts() {
                     teks = `${body.slice(8)}`
                     if (teks.length > 10) return client.sendMessage(from, 'Grande pa carai essa porra', text, {quoted: mek})
                     reply(mess.waitmk)
-                    buff = await getBuffer(`https://arugaz.my.id/api/textpro/thundertext?text=${teks}`, {method: 'get'})
+                    buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/thunder?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break
      /*           case 'neon':
@@ -380,6 +380,24 @@ async function starts() {
                     buff = await getBuffer(`https://docs-jojo.herokuapp.com/api/neon_light?text=${teks}`, {method: 'get'})
                     client.sendMessage(from, buff, image, {quoted: mek, caption: `${teks}`})
 			     	break */
+			     	    case 'glitch':
+                    gh = body.slice(8)
+                    teks1 = gh.split("|")[0];
+                    teks2 = gh.split("|")[1];
+                    data = await fetchJson(`https://docs-jojo.herokuapp.com/api/ttlogo?text1=${teks1}&text2=${teks2}`)
+                    hasil = await getBuffer(data.result)
+                    client.sendMessage(from, hasil, image, {quoted: mek, caption: 'neh...'})
+                    break
+                case 'retro':
+                    gh = body.slice(12)
+                    /*if (!isDaftar) return reply(mess.only.daftarB)*/
+                    teks1 = gh.split("|")[0];
+                    teks2 = gh.split("|")[1];
+                    teks3 = gh.split("|")[2]
+                    data = await fetchJson(`https://docs-jojo.herokuapp.com/api/neon?text1=${teks1}&text2=${teks2}&text3=${teks3}`)
+                    hasil = await getBuffer(data.result)
+                    client.sendMessage(from, hasil, image, {quoted: mek, caption: 'neh...'})
+                    break
                 case 'tagall':
                     if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
@@ -438,32 +456,6 @@ async function starts() {
 					}
 					reply('Pronto papai 🥰, deletei todos os meus chats')
 					break
-        case 'block':
-					if (!isGroup) return reply(mess.only.group)
-					if (!isOwner) return reply(mess.only.ownerB)
-					client.blockUser (`${body.slice(7)}@c.us`, "add")
-					client.sendMessage(from, `Pronto papai bloquiei esse desgraçado ${body.slice(7)}@c.us`, text)
-					break
-                    case 'unblock':
-					if (!isGroup) return reply(mess.only.group)
-					if (!isOwner) return reply(mess.only.ownerB)
-				    client.blockUser (`${body.slice(9)}@c.us`, "remove")
-					client.sendMessage(from, `Pronto papai desbloquiei esse viado ${body.slice(9)}@c.us`, text)
-				break
-        case 'bug':
-                case 'reportar':
-                case 'reportarbug':
-                     const pesan = body.slice(5)
-                      if (pesan.length > 300) return client.sendMessage(from, 'Grande pa carai essa porra, meu dono não vai nem querer ler', msgType.text, {quoted: mek})
-                        var nomor = mek.participant
-                       const teks1 = `*[BUG REPORTADO]*\nNumero : @${nomor.split("@s.whatsapp.net")[0]}\nMOTIVO : ${pesan}`
-                      var options = {
-                         text: teks1,
-                         contextInfo: {mentionedJid: [nomor]},
-                     }
-                    client.sendMessage('553192271279@s.whatsapp.net', options, text, {quoted: mek})
-                    reply('Reportei o bug para o meu dono')
-                    break
                                 case 'promote':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.admin)
