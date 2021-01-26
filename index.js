@@ -326,7 +326,7 @@ async function starts() {
 				case 'play':
 					if (args.length < 1) return reply('Cade o link macaco')
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
-					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${tels}&apikey=BotWeA`, {method: 'get'})
+					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${args[0]}&apikey=BotWeA`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
 					reply(mess.waitdw)
 					teks = `*título* : ${anu.title}\n*tamanho* : ${anu.filesize}`
@@ -338,7 +338,7 @@ async function starts() {
                 case 'ytmp4':
 					if (args.length < 1) return reply('Cade o link macaco')
 					if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
-					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${tels}&apikey=BotWeA`, {method: 'get'})
+					anu = await fetchJson(`https://tobz-api.herokuapp.com/api/ytv?url=${args[0]}&apikey=BotWeA`, {method: 'get'})
 					if (anu.error) return reply(anu.error)
 					reply(mess.waitdw)
 					teks = `*Titulo 🐒* : ${anu.title}`
